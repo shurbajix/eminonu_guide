@@ -1,6 +1,7 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
 
 class Resturent extends StatefulWidget {
   const Resturent({super.key});
@@ -10,10 +11,9 @@ class Resturent extends StatefulWidget {
 }
 
 class _ResturentState extends State<Resturent> {
-  final scaffeldKey = GlobalKey<ScaffoldState>();
-  //bool isExpanded = true;
-  //final loermIpsum = "Lorem text very important";
-  double rating = 0;
+  //final scaffeldKey = GlobalKey<ScaffoldState>();
+
+  double? rating = 0;
   final loremIpsum = [
     "YABANCI ÖĞRENCİ · banner-web-boyut,. Türkiye Cumhuriyeti 100 Yaşında · 2023-tyt-simulasyon-1920x700. 2023 TYT Sınav Simülasyonu · sporcu-bilgi-formu-1920x700",
   ];
@@ -23,6 +23,15 @@ class _ResturentState extends State<Resturent> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
+        leading: IconButton(
+          onPressed: () {
+            Get.back();
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+            color: Colors.white,
+          ),
+        ),
         title: const Text(
           'Resturent',
         ),
@@ -55,7 +64,7 @@ class _ResturentState extends State<Resturent> {
           clipBehavior: Clip.antiAlias,
           child: Column(
             children: [
-              //Image.asset(urlImagesd),
+              Image.asset(urlImagesd),
               ExpandablePanel(
                 header: Row(
                   children: [
@@ -76,7 +85,7 @@ class _ResturentState extends State<Resturent> {
                           borderRadius: BorderRadius.circular(10),
                           child: Image.asset(
                             'images/kadikoy.jpg',
-                            width: 100,
+                            width: 150,
                           ),
                         ),
                         const SizedBox(
@@ -85,10 +94,12 @@ class _ResturentState extends State<Resturent> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            IconButton(
-                              onPressed: () {},
-                              icon: Image.asset(
-                                'images/map.png',
+                            Expanded(
+                              child: IconButton(
+                                onPressed: () {},
+                                icon: Image.asset(
+                                  'images/map.png',
+                                ),
                               ),
                             ),
                             RatingBar.builder(

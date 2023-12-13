@@ -1,78 +1,35 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:eminonu_guide/Emnioi.dart';
-import 'package:eminonu_guide/Resturnet.dart';
+import 'package:eminonu_guide/pages/Resturnet.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
+import 'package:get/route_manager.dart';
 import '../class/class.dart';
+import '../pages/Karakoy.dart';
 
 class Home extends StatefulWidget {
-  const Home({super.key});
+  const Home({
+    super.key,
+  });
 
   @override
   State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  int _currentIndex = 0;
-
- 
-
-  void _scrollForward() {
-    if (_currentIndex < imagess.length - 1) {
-      setState(() {
-        _currentIndex++;
-      });
-    }
-  }
-
-  void _scrollBackward() {
-    if (_currentIndex > 0) {
-      setState(() {
-        _currentIndex--;
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        backgroundColor: Colors.grey,
-        child: Padding(
-          padding: const EdgeInsets.only(
-            top: 40,
-          ),
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: 5,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: const Text(
-                  'Text',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                  ),
-                ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const Emnuioi(),
-                    ),
-                  );
-                },
-              );
-            },
-          ),
-        ),
-      ),
+      drawer: const _drawer(),
       appBar: AppBar(
-        backgroundColor: Colors.grey,
+        iconTheme: const IconThemeData(
+          color: Colors.white,
+        ),
+        backgroundColor: Colors.black,
         title: const Text(
           'Eminönü guide',
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: 25,
           ),
         ),
@@ -81,12 +38,12 @@ class _HomeState extends State<Home> {
       body: Column(
         children: [
           const SizedBox(
-            height: 10,
+            height: 20,
           ),
           CarouselSlider.builder(
             itemBuilder: (context, index, realIndex) {
               return Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(7.0),
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
@@ -104,7 +61,7 @@ class _HomeState extends State<Home> {
                       TextButton(
                         onPressed: () {},
                         child: const Text(
-                          'Welcomes',
+                          'welcomes',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 30,
@@ -117,7 +74,7 @@ class _HomeState extends State<Home> {
               );
             },
             options: CarouselOptions(
-              height: 200.0,
+              height: 300.0,
               autoPlay: true,
               aspectRatio: 16 / 9,
             ),
@@ -126,45 +83,35 @@ class _HomeState extends State<Home> {
           const SizedBox(
             height: 20,
           ),
-          Expanded(
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 200,
-                childAspectRatio: 3 / 2,
-                crossAxisSpacing: 20,
-                mainAxisSpacing: 20,
-              ),
-              itemCount: imagess.length,
-              itemBuilder: (BuildContext ctx, index) {
+          SizedBox(
+            height: 80,
+            child: ListView.builder(
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              itemCount: iconsd.length,
+              itemBuilder: (context, index) {
                 return Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(5),
                   child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const Emnuioi(),
-                        ),
-                      );
-                    },
+                    onTap: () {},
                     child: Container(
-                      alignment: Alignment.center,
+                      width: 80,
                       decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(
-                            imagess[index],
-                          ),
-                        ),
-                        borderRadius: BorderRadius.circular(
-                          15,
-                        ),
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      child: const Text(
-                        "name",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 30,
-                        ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Icon(
+                            iconsd[index],
+                          ),
+
+                          Text(
+                            icontext[index],
+                          ),
+                          //ElevatedButton.icon(onPressed: (){}, icon: icon, label: label)
+                        ],
                       ),
                     ),
                   ),
@@ -172,7 +119,88 @@ class _HomeState extends State<Home> {
               },
             ),
           ),
+          const SizedBox(
+            height: 20,
+          ),
+          BuildHello(),
         ],
+      ),
+    );
+  }
+
+  Widget BuildHello() => RichText(
+        textAlign: TextAlign.center,
+        text: TextSpan(
+          text:
+              '''This method will save memory by building items once it becomes necessary. This way they won't be built if they're not currently meant to be visible on screen. It can be used to build different child item widgets related to content or by item index.''',
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 25,
+          ),
+          children: [
+            TextSpan(
+              text: 'welcomes',
+              style: const TextStyle(
+                color: Colors.blue,
+              ),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () {
+                  Get.to(
+                    const Resturent(),
+                  );
+                },
+            ),
+          ],
+        ),
+      );
+}
+
+List<IconData> iconsd = [
+  Icons.map,
+  Icons.face,
+  Icons.security,
+  Icons.call,
+];
+List<String> icontext = [
+  'Location',
+  'Face',
+  'Security',
+  'Call',
+];
+
+class _drawer extends StatelessWidget {
+  const _drawer({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      backgroundColor: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.only(
+          top: 40,
+        ),
+        child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: titlesd.length,
+          itemBuilder: (BuildContext context, index) {
+            return ListTile(
+              title: Text(
+                titlesd[index],
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 25,
+                ),
+              ),
+              onTap: () {
+                Get.to(
+                  const Resturent(),
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }
